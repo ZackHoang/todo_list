@@ -1,0 +1,54 @@
+* {
+    padding: 0; 
+    margin: 0; 
+}
+
+body {
+    display: flex;
+    flex-direction: column; 
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 8fr;
+    width: 100%; 
+    height: 100%;  
+}
+
+.title {
+    padding: 1vw;
+    border: 1px solid black;
+}
+
+.sidebar {
+    display: grid;  
+    grid-template-rows: 10vh 60vh;
+    justify-content: left;  
+    padding: 1vw;
+    border-right: 1px solid black;
+    gap: 100px;
+}
+
+.sidebar_btns_container {
+    display: grid;
+    gap: 10px;
+}
+
+.sidebar_projects {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.todo_page {
+    margin: 1vw;
+    display: grid;
+    align-items: center;
+    align-content: start;
+    gap: 1vh; 
+}
+
+.todo_page_title {
+    font-size: 24px;
+    font-weight: bold;
+}
