@@ -3,6 +3,17 @@
     margin: 0; 
 }
 
+@font-face {
+    font-family: Helvetica Bold;
+    src: url("./font/Helvetica-Bold.ttf") format('truetype');
+}
+
+
+@font-face {
+    font-family: Helvetica;
+    src: url("./font/Helvetica.ttf") format('truetype');
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -11,45 +22,58 @@ body {
 
 .content {
     display: grid;
-    grid-template-columns: 1fr 8fr;
+    grid-template-columns: 1fr 4fr;
     width: 100%; 
     height: 100%;  
+    font-family: Helvetica;
+    border-top: 1px solid black;
 }
 
 .title {
     padding: 1vw;
-    border: 1px solid black;
+    font-family: Helvetica Bold;
+    align-self: center;
 }
 
 .sidebar {
     display: grid;  
-    grid-template-rows: 10vh 60vh;
+    grid-template-rows: 1fr 2fr;
+    grid-template-columns: 1fr;
     justify-content: left;  
     padding: 1vw;
+    gap: 5vh;
     border-right: 1px solid black;
-    gap: 100px;
 }
 
 .sidebar_btns_container {
-    display: grid;
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+button {
+    font-size: 24px;
+    padding: 12px; 
+    background-color: white;
+    border: none; 
+}
+
+button:hover {
+    background-color: #E9EAEC;
 }
 
 .sidebar_projects {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 2vh; 
+    font-family: Helvetica;
 }
 
 .todo_page {
-    margin: 1vw;
+    padding: 1vw;
     display: grid;
     align-items: center;
     align-content: start;
-    gap: 1vh; 
+    gap: 2vh;
 }
 
-.todo_page_title {
-    font-size: 24px;
-    font-weight: bold;
-}
