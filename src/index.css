@@ -15,9 +15,52 @@
 }
 
 body {
+    display: grid;
+    height: 100vh; 
+}
+
+dialog[open] {
     display: flex;
     flex-direction: column;
-    height: 100vh; 
+    align-self: center;
+    justify-self: center;
+    border: 0.5px solid black;
+    padding: 20px;
+    gap: 20px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 1vw; 
+    font-size: 24px;
+}
+
+.form_col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form_col > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form_btn_container {
+    border-top: 1vh; 
+    grid-column-start: 2;
+    justify-self: flex-end;
+}
+
+#title, #description, #date, #priority, #project {
+    padding: 5px;
+}
+
+textarea {
+    resize: vertical; 
 }
 
 .content {
@@ -55,11 +98,29 @@ button {
     font-size: 24px;
     padding: 12px; 
     background-color: white;
-    border: none; 
+    border: 0.5px solid black; 
+    text-align: left;
 }
 
 button:hover {
     background-color: #E9EAEC;
+}
+
+#inbox, #today, #this_week, #add_project {
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+    gap: 10px;
+}
+
+#todo_btn {
+    display: grid;
+    grid-template-columns: 1fr 40fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.form_btn {
+    font-size: 12px;
 }
 
 .sidebar_projects {
@@ -77,3 +138,17 @@ button:hover {
     gap: 2vh;
 }
 
+.todos {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.task {
+    font-family: Helvetica; 
+    padding: 12px;
+    border: 0.5px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}

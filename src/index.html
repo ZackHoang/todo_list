@@ -7,23 +7,67 @@
 </head>
 <body>
     <h1 class="title">JUST-DO-IT</h1>
+    <dialog>
+        <h2>New Todo</h2>
+        <form>
+            <div class="form_col">
+                <div>
+                    <label for="title">Title</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div>
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description"></textarea>
+                </div>
+            </div>
+            <div class="form_col">
+                <div>
+                    <label for="date">Due Date</label>
+                    <input type="date" id="date" required/>
+                </div>
+                <div>
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority" required>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="project">Project</label>
+                    <select name="project" id="project" required>
+                        <option value="inbox">Inbox</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form_btn_container">
+                <button class="form_btn" id="close">Close</button>
+                <button class="form_btn" type="submit">Submit</button>
+            </div>
+        </form>
+    </dialog>
     <div class="content">
         <div class="sidebar">
             <div class="sidebar_btns_container">
                 <h2>Home</h2>
-                <button>Inbox</button>
-                <button>Today</button>
-                <button>This Week</button>
+                <button id="inbox">Inbox</button>
+                <button id="today">Today</button>
+                <button id="this_week">This Week</button>
             </div>
             <div class="sidebar_projects">
                 <h2>Projects</h2>
-                <button class="sidebar_btns">Add Project</button>
+                <button id="add_project">Add Project</button>
             </div>
         </div>
         <div class="todo_page">
             <h2 id="todo_title">Inbox</h2>
-            <button>Add Todo</button>
+            <button id="todo_btn">Add Todo</button>
             <div class="todos">
+                <!-- <div class="task">
+                    <h3>This is a sample task</h3>
+                    <p>This is a description</p>
+                    <p>This is due date</p>
+                </div> -->
             </div>
         </div>
     </div>

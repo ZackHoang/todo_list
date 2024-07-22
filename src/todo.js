@@ -1,5 +1,5 @@
 //Make new todo
-function createToDo(title, description, dueDate, priority, status) {
+function todo(title, description, dueDate, priority, status) {
     return {title, description, dueDate, priority, status} 
 } 
 
@@ -9,5 +9,6 @@ function createProject(project) {
     return project; 
 } 
 
-export {createToDo, createProject}; 
+
+export {todo, createProject}; 
 
