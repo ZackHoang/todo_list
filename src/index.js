@@ -1,18 +1,26 @@
-import { createToDo, createProject } from "./todo";
-import { displayForm, displayTodos, addIcon } from "./dom";
+import { createProject } from "./todo";
+import { displayForm, displayTodos, addIcon, displayProject, makeTodo} from "./dom";
 import './index.css'; 
+
+const addTodo = document.getElementById("todo_btn"); 
 
 addIcon(); 
 displayForm(); 
 displayTodos(); 
+displayProject(); 
 
 //Creates three default projects 
-let inbox = []; 
-let today = []; 
-let thisWeek = []; 
 
-// localStorage.setItem("inbox", JSON.stringify(inbox)); 
+createProject("inbox"); 
+createProject("today"); 
+createProject("thisWeek"); 
+// localStorage.clear(); 
+// localStorage.removeItem("project1"); 
+// localStorage.removeItem("inbox"); 
 
+addTodo.addEventListener("click", () => {
+    makeTodo(); 
+})
 
 //Testing 
 // let todo1 = createToDo("asd", "dummy task", "7/11/2024", "high", "done");
