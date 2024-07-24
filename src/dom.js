@@ -2,6 +2,7 @@ import InboxIcon from './icons/inbox.svg';
 import TodayIcon from './icons/calendar-today.svg'; 
 import ThisWeekIcon from './icons/calendar-week.svg'; 
 import Plus from './icons/plus.svg'; 
+import { format, parseISO } from 'date-fns';
 
 import { todo, createProject, addTodo, deleteTodo } from './todo';
 
@@ -117,7 +118,7 @@ function makeTodo() {
             const todoDueDate = document.createElement("p");  
             todoTitle.textContent = title.value; 
             todoDescription.textContent = description.value; 
-            todoDueDate.textContent = dueDate.value; 
+            todoDueDate.textContent = format(parseISO(dueDate.value), 'MMMM do yyyy');  
             todoCard.append(todoTitle, todoDescription, todoDueDate);
             title.value = ''; 
             description.value = ''; 
