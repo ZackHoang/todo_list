@@ -27,10 +27,25 @@ function deleteTodo(todo, project) {
     localStorage.setItem(project.toString(), JSON.stringify(projectArr)); 
 }
 
+//Change todo title 
+function changeTodoTitle(titleKey, titleValue) {
+    let todoTitle = localStorage.getItem(titleKey); 
+    todoTitle = titleValue; 
+    localStorage.setItem(titleKey.toString(), todoTitle); 
+    return todoTitle; 
+}
+
+//Retrieve todo from localStorage
+function getTodo(project) {
+    let projectArr = JSON.parse(localStorage.getItem(project)); 
+    console.log(projectArr); 
+    return projectArr; 
+}
+
 //Delete a project 
 function deleteProject(project) {
     localStorage.removeItem(project); 
 }
 
-export {todo, createProject, addTodo, deleteTodo, deleteProject}; 
+export {todo, createProject, addTodo, getTodo, deleteTodo, deleteProject, changeTodoTitle}; 
 
