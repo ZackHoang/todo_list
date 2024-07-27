@@ -6,6 +6,8 @@ import Plus from './icons/plus.svg';
 import { format, parseISO } from 'date-fns';
 import { todo, createProject, addTodo, getTodo, deleteTodo, changeTodoTitle } from './todo';
 
+const todos = document.querySelector(".todos"); 
+
 //Add Icon
 function addIcon() {
     const inbox = document.getElementById("inbox"); 
@@ -66,25 +68,11 @@ function displayForm() {
 function displayTodos() {
     const projectBtns = document.querySelectorAll(".project_btn"); 
     const todoTitle = document.getElementById("todo_title"); 
-    const todos = document.querySelector(".todos"); 
     todoTitle.textContent = localStorage.getItem("Todo Title"); 
 
     let displayTodoArr = getTodo(todoTitle.textContent); 
     if (displayTodoArr.length > 0) {
-        for (let i = 0; i <= displayTodoArr.length - 1; i++) {
-            const todoCard = document.createElement("div"); 
-            todoCard.classList.add("task"); 
-            todos.appendChild(todoCard); 
-            const todoTitle = document.createElement("h3"); 
-            const todoDescription = document.createElement("p"); 
-            const todoDueDate = document.createElement("p");  
-            const todoPriority = document.createElement("p"); 
-            todoTitle.textContent = displayTodoArr[i].title; 
-            todoDescription.textContent = `Description: ${displayTodoArr[i].description}`; 
-            todoDueDate.textContent = `Due Date: ` + format(parseISO(displayTodoArr[i].dueDate), 'MMMM do yyyy');
-            todoPriority.textContent = `Priority: ${displayTodoArr[i].priority}`; 
-            todoCard.append(todoTitle, todoDescription, todoDueDate, todoPriority);  
-        }
+        populateTodoArr(displayTodoArr); 
     }
 
     projectBtns.forEach((projectBtn) => {
@@ -95,20 +83,7 @@ function displayTodos() {
             todoTitle.textContent = projectBtn.textContent; 
             let projectArr = getTodo(projectBtn.textContent); 
             if (projectArr.length > 0) {
-                for (let i = 0; i <= projectArr.length - 1; i++) {
-                    const todoCard = document.createElement("div"); 
-                    todoCard.classList.add("task"); 
-                    todos.appendChild(todoCard); 
-                    const todoTitle = document.createElement("h3"); 
-                    const todoDescription = document.createElement("p"); 
-                    const todoDueDate = document.createElement("p");  
-                    const todoPriority = document.createElement("p"); 
-                    todoTitle.textContent = projectArr[i].title; 
-                    todoDescription.textContent = `Description: ${projectArr[i].description}`; 
-                    todoDueDate.textContent = `Due Date: ` + format(parseISO(projectArr[i].dueDate), 'MMMM do yyyy');
-                    todoPriority.textContent = `Priority: ${projectArr[i].priority}`; 
-                    todoCard.append(todoTitle, todoDescription, todoDueDate, todoPriority);  
-                }
+                populateTodoArr(projectArr); 
             }
             let currentTodoTitle = changeTodoTitle("Todo Title", todoTitle.textContent)
             todoTitle.textContent = currentTodoTitle; 
@@ -152,19 +127,7 @@ function makeTodo() {
             const newToDo = todo(title.value, description.value, dueDate.value, priority.value);
             addTodo(newToDo, project.value); 
             if (project.value == todoTitle.textContent) {
-                const todos = document.querySelector(".todos"); 
-                const todoCard = document.createElement("div"); 
-                todoCard.classList.add("task"); 
-                todos.appendChild(todoCard); 
-                const todoTitle = document.createElement("h3"); 
-                const todoDescription = document.createElement("p"); 
-                const todoDueDate = document.createElement("p");  
-                const todoPriority = document.createElement("p"); 
-                todoTitle.textContent = title.value; 
-                todoDescription.textContent = `Description: ${description.value}`; 
-                todoDueDate.textContent = `Due Date: ` + format(parseISO(dueDate.value), 'MMMM do yyyy');  
-                todoPriority.textContent = `Priority: ${priority.value}`; 
-                todoCard.append(todoTitle, todoDescription, todoDueDate, todoPriority);
+                populateTodoObj(title, description, dueDate, priority); 
             } 
             title.value = ''; 
             description.value = ''; 
@@ -173,7 +136,69 @@ function makeTodo() {
             dialog.close(); 
         } 
     })
+}   
+
+function populateTodoArr(array) {
+    for (let i = 0; i <= array.length - 1; i++) {
+        const todoCard = document.createElement("div"); 
+        todoCard.classList.add("task");
+        todos.appendChild(todoCard); 
+        const todoCardCol1 = document.createElement("div"); 
+        todoCardCol1.classList.add("task_col_1");  
+        todos.appendChild(todoCard); 
+        const todoTitle = document.createElement("h3"); 
+        const todoDescription = document.createElement("p"); 
+        const todoDueDate = document.createElement("p");  
+        const todoPriority = document.createElement("p"); 
+        todoTitle.textContent = array[i].title; 
+        todoDescription.textContent = `Description: ${array[i].description}`; 
+        todoDueDate.textContent = `Due Date: ` + format(parseISO(array[i].dueDate), 'MMMM do yyyy');
+        todoPriority.textContent = `Priority: ${array[i].priority}`; 
+        todoCardCol1.append(todoTitle, todoDescription, todoDueDate, todoPriority);
+        const todoCardCol2 = document.createElement("div"); 
+        todoCardCol2.classList.add("task_col_2"); 
+        const deleteBtn = document.createElement("button"); 
+        deleteBtn.classList.add("task_btn"); 
+        deleteBtn.textContent = "Delete"; 
+        const editBtn = document.createElement("button"); 
+        editBtn.classList.add("task_btn"); 
+        editBtn.textContent = "Edit"; 
+        const priorityBtn = document.createElement("button"); 
+        priorityBtn.classList.add("task_btn"); 
+        priorityBtn.textContent = "Priority"; 
+        todoCardCol2.append(deleteBtn, editBtn, priorityBtn); 
+        todoCard.append(todoCardCol1, todoCardCol2);
+    }
 }
 
+function populateTodoObj(title, description, dueDate, priority) {
+    const todoCard = document.createElement("div"); 
+    todoCard.classList.add("task"); 
+    todos.appendChild(todoCard); 
+    const todoCardCol1 = document.createElement("div"); 
+    todoCardCol1.classList.add("task_col_1"); 
+    const todoTitle = document.createElement("h3"); 
+    const todoDescription = document.createElement("p"); 
+    const todoDueDate = document.createElement("p");  
+    const todoPriority = document.createElement("p"); 
+    todoTitle.textContent = title.value; 
+    todoDescription.textContent = `Description: ${description.value}`; 
+    todoDueDate.textContent = `Due Date: ` + format(parseISO(dueDate.value), 'MMMM do yyyy');  
+    todoPriority.textContent = `Priority: ${priority.value}`; 
+    todoCardCol1.append(todoTitle, todoDescription, todoDueDate, todoPriority); 
+    const todoCardCol2 = document.createElement("div"); 
+    todoCardCol2.classList.add("task_col_2"); 
+    const deleteBtn = document.createElement("button"); 
+    deleteBtn.classList.add("task_btn"); 
+    deleteBtn.textContent = "Delete"; 
+    const editBtn = document.createElement("button"); 
+    editBtn.classList.add("task_btn"); 
+    editBtn.textContent = "Edit"; 
+    const priorityBtn = document.createElement("button"); 
+    priorityBtn.classList.add("task_btn"); 
+    priorityBtn.textContent = "Priority"; 
+    todoCardCol2.append(deleteBtn, editBtn, priorityBtn); 
+    todoCard.append(todoCardCol1, todoCardCol2);
+}
 
 export {displayForm, displayTodos, addIcon, displayProject, makeTodo}; 
