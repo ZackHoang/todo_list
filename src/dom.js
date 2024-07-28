@@ -138,7 +138,33 @@ function makeTodo() {
     })
 }   
 
+//Make new project
+function makeProject() {
+    const projectTitle = document.getElementById("new_project"); 
+    const submit = document.getElementById("submit_project"); 
+    const projectList = document.getElementById("project"); 
+    const projectTab = document.querySelector(".sidebar_projects"); 
+
+    submit.addEventListener("click", (event) => {
+        event.preventDefault(); 
+        //Make new project in localStorage
+        createProject(projectTitle.value); 
+        //Create new option in todo dialog
+        const newProjectChoice = document.createElement("option"); 
+        newProjectChoice.value = projectTitle.textContent; 
+        projectList.appendChild(newProjectChoice); 
+        //make new project button 
+        const newProject = document.createElement("button"); 
+        newProject.classList.add("project_btn"); 
+        newProject.setAttribute("id", projectTitle.textContent); 
+        newProject.textContent = projectTitle.value;    
+        projectTab.appendChild(newProject); 
+    })
+}
+
+//Populate display of todo cards from array
 function populateTodoArr(array) {
+    const projectTitle = document.getElementById("todo_title"); 
     for (let i = 0; i <= array.length - 1; i++) {
         const todoCard = document.createElement("div"); 
         todoCard.classList.add("task");
@@ -162,16 +188,19 @@ function populateTodoArr(array) {
         deleteBtn.textContent = "Delete"; 
         const editBtn = document.createElement("button"); 
         editBtn.classList.add("task_btn"); 
-        editBtn.textContent = "Edit"; 
-        const priorityBtn = document.createElement("button"); 
-        priorityBtn.classList.add("task_btn"); 
-        priorityBtn.textContent = "Priority"; 
-        todoCardCol2.append(deleteBtn, editBtn, priorityBtn); 
+        editBtn.textContent = "Edit";  
+        todoCardCol2.append(deleteBtn, editBtn); 
         todoCard.append(todoCardCol1, todoCardCol2);
+        deleteBtn.addEventListener("click", () => {
+            todoCard.remove(); 
+            deleteTodo(todoTitle.textContent, projectTitle.textContent);
+        })
     }
 }
 
+//Populate todo card as an object 
 function populateTodoObj(title, description, dueDate, priority) {
+    const projectTitle = document.getElementById("todo_title"); 
     const todoCard = document.createElement("div"); 
     todoCard.classList.add("task"); 
     todos.appendChild(todoCard); 
@@ -193,12 +222,18 @@ function populateTodoObj(title, description, dueDate, priority) {
     deleteBtn.textContent = "Delete"; 
     const editBtn = document.createElement("button"); 
     editBtn.classList.add("task_btn"); 
-    editBtn.textContent = "Edit"; 
-    const priorityBtn = document.createElement("button"); 
-    priorityBtn.classList.add("task_btn"); 
-    priorityBtn.textContent = "Priority"; 
-    todoCardCol2.append(deleteBtn, editBtn, priorityBtn); 
+    editBtn.textContent = "Edit";  
+    todoCardCol2.append(deleteBtn, editBtn); 
     todoCard.append(todoCardCol1, todoCardCol2);
+    deleteBtn.addEventListener("click", () => {
+        todoCard.remove(); 
+        deleteTodo(todoTitle.textContent, projectTitle.textContent); 
+    })
 }
 
-export {displayForm, displayTodos, addIcon, displayProject, makeTodo}; 
+//Populate project buttons to display todos 
+// function populateProject(array) {
+    
+// }
+
+export {displayForm, displayTodos, addIcon, displayProject, makeTodo, makeProject}; 

@@ -1,9 +1,9 @@
 import { createProject, getTodo } from "./todo";
-import { displayForm, displayTodos, addIcon, displayProject, makeTodo} from "./dom";
+import { displayForm, displayTodos, addIcon, displayProject, makeTodo, makeProject } from "./dom";
 import './index.css'; 
 
 const addTodo = document.getElementById("todo_btn"); 
-const todoTitle = document.getElementById("todo_title"); 
+const addProject = document.getElementById("add_project"); 
 
 addIcon(); 
 displayForm(); 
@@ -22,6 +22,10 @@ displayProject();
 
 addTodo.addEventListener("click", () => {
     makeTodo(); 
+}); 
+
+addProject.addEventListener("click", () => {
+    makeProject(); 
 })
 
 
