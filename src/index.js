@@ -18,8 +18,8 @@ displayProject();
 // localStorage.clear(); 
 // localStorage.removeItem("project1"); 
 // localStorage.removeItem("inbox"); 
-
-
+// localStorage.removeItem("custom1");
+// localStorage.removeItem("Custom1");
 addTodo.addEventListener("click", () => {
     makeTodo(); 
 }); 

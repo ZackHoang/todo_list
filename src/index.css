@@ -68,6 +68,7 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    font-family: Helvetica;
 }
 
 .form_col > div {
@@ -193,5 +194,23 @@ button:hover {
     gap: 1vh;
 }
 
+.custom_projects {
+    display: grid;
+    gap: 12px;
+}
 
+/* .project {
+    display: grid; 
+    grid-template-columns: 5fr 0.5fr;
+    border: 0.5px solid black;  
+}
+
+.delete_project {
+    border: unset;
+    justify-self: center;
+}
+
+.custom {
+    border: unset;
+} */
 
