@@ -66,11 +66,11 @@ function displayForm() {
 
 //Display todos
 function displayTodos() {
+    loadProject("Custom Projects"); 
+
     const projectBtns = document.querySelectorAll(".project_btn"); 
     const todoTitle = document.getElementById("todo_title"); 
     todoTitle.textContent = localStorage.getItem("Todo Title"); 
-
-    loadProject("Custom Projects"); 
 
     while (todos.hasChildNodes()) {
         todos.removeChild(todos.firstChild); 
@@ -224,7 +224,7 @@ function populateTodoArr(array) {
 function loadProject(array) {
 
     const customProjects = document.querySelector(".custom_projects"); 
-    
+
     while (customProjects.hasChildNodes()) {
         customProjects.removeChild(customProjects.firstChild); 
     }
