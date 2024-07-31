@@ -20,6 +20,17 @@ displayProject();
 // localStorage.removeItem("inbox"); 
 // localStorage.removeItem("custom1");
 // localStorage.removeItem("Custom1");
+// localStorage.removeItem("Custom Projects"); 
+// createProject("Custom Projects"); 
+// localStorage.removeItem("custom1"); 
+// localStorage.removeItem("custom2"); 
+// localStorage.removeItem("custom3"); 
+// localStorage.removeItem("custom4"); 
+// localStorage.removeItem("custom5"); 
+// localStorage.removeItem(""); 
+
+
+
 addTodo.addEventListener("click", () => {
     makeTodo(); 
 }); 

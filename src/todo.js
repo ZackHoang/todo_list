@@ -7,6 +7,7 @@ function todo(title, description, dueDate, priority) {
 function createProject(project) {
     let projectArr = []; 
     localStorage.setItem(project.toString(), JSON.stringify(projectArr)); 
+    return projectArr; 
 } 
 
 //Add a todo to a project 

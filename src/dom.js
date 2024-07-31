@@ -70,6 +70,12 @@ function displayTodos() {
     const todoTitle = document.getElementById("todo_title"); 
     todoTitle.textContent = localStorage.getItem("Todo Title"); 
 
+    loadProject("Custom Projects"); 
+
+    while (todos.hasChildNodes()) {
+        todos.removeChild(todos.firstChild); 
+    }
+
     let displayTodoArr = getTodo(todoTitle.textContent); 
     if (displayTodoArr.length > 0) {
         populateTodoArr(displayTodoArr); 
@@ -89,26 +95,8 @@ function displayTodos() {
             todoTitle.textContent = currentTodoTitle; 
         })
     }); 
-    // displayProjects(projectBtns); 
 }
 
-//Display projects 
-// function displayProjects(buttons) {
-//     buttons.forEach((button) => {
-//         button.addEventListener("click", () => {
-//             while (todos.hasChildNodes()) {
-//                 todos.removeChild(todos.firstChild); 
-//             }
-//             todoTitle.textContent = button.textContent; 
-//             let projectArr = getTodo(button.textContent); 
-//             if (projectArr.length > 0) {
-//                 populateTodoArr(projectArr); 
-//             }
-//             let currentTodoTitle = changeTodoTitle("Todo Title", todoTitle.textContent)
-//             todoTitle.textContent = currentTodoTitle; 
-//         })
-//     }); 
-// }
 
 //Add new project 
 function displayProject() {
@@ -145,48 +133,32 @@ function makeTodo() {
             }
             const newToDo = todo(title.value, description.value, dueDate.value, priority.value);
             addTodo(newToDo, project.value); 
-            if (project.value == todoTitle.textContent) {
-                populateTodoObj(title, description, dueDate, priority); 
-            } 
             title.value = ''; 
             description.value = ''; 
             dueDate.value = ''; 
             console.log(newToDo); 
             dialog.close(); 
+            const projectArr = getTodo(todoTitle.textContent); 
+            if (project.value == todoTitle.textContent) {
+                populateTodoArr(projectArr);  
+            } 
         } 
     })
 }   
 
 //Make new project
 function makeProject() {
-    const projectBtns = document.querySelectorAll(".project_btn"); 
     const projectTitle = document.getElementById("new_project"); 
     const dialog = document.getElementById("project_dialog"); 
     const submit = document.getElementById("submit_project"); 
-    const projectList = document.getElementById("project"); 
 
     submit.addEventListener("click", (event) => {
         event.preventDefault(); 
-        const customProjects = document.querySelector(".custom_projects"); 
-        //Make new project in localStorage
         createProject(projectTitle.value); 
-        //Create new option in todo dialog
-        const newProjectChoice = document.createElement("option"); 
-        newProjectChoice.value = projectTitle.textContent; 
-        projectList.appendChild(newProjectChoice); 
-        //make new project button 
-        const newProject = document.createElement("button"); 
-        newProject.classList.add("project_btn"); 
-        newProject.setAttribute("id", projectTitle.value); 
-        newProject.textContent = projectTitle.value;    
-        customProjects.appendChild(newProject); 
-        //Add to custom projects key 
-        let customProjectsArr = JSON.parse(localStorage.getItem("Custom Projects"));  
-        customProjectsArr.push(projectTitle.value);
-        // addTodo(projectTitle.value, customProjectsArr);
-        localStorage.setItem("Custom Projects", JSON.stringify(customProjectsArr)); 
+        let projectArr = JSON.parse(localStorage.getItem("Custom Projects")); 
+        projectArr.push(projectTitle.value); 
+        localStorage.setItem("Custom Projects", JSON.stringify(projectArr)); 
         displayTodos(); 
-        //Close form and clear text field 
         projectTitle.value = ''; 
         dialog.close();  
     })
@@ -200,8 +172,11 @@ function populateTodoArr(array) {
     const description = document.getElementById("description"); 
     const dueDate = document.getElementById("date"); 
     const priority = document.getElementById("priority"); 
-    const submit = document.getElementById("submit_todo"); 
     const project = document.getElementById("project");
+
+    while (todos.hasChildNodes()) {
+        todos.removeChild(todos.firstChild); 
+    }
 
     for (let i = 0; i <= array.length - 1; i++) {
         const todoCard = document.createElement("div"); 
@@ -242,74 +217,32 @@ function populateTodoArr(array) {
             priority.value = array[i].priority; 
             project.value = projectTitle.textContent; 
         })
-
-        // submit.addEventListener("click", () => {
-        //     let newArray = getTodo(project.value); 
-        //     todoCard.remove(); 
-        //     array.splice(i, 1); 
-        //     let newTodo = todo(title.value, description.value, dueDate.value, priority.value); 
-        //     newArray.push(newTodo); 
-        //     populateTodoArr(newArray); 
-        // }); 
     }
 }
 
-//Populate todo card as an object 
-function populateTodoObj(title, description, dueDate, priority) {
-    const dialog = document.getElementById("todo_dialog"); 
-    // const title = document.getElementById("title"); 
-    // const description = document.getElementById("description"); 
-    // const dueDate = document.getElementById("date"); 
-    // const priority = document.getElementById("priority"); 
-    // const submit = document.getElementById("submit_todo"); 
-    const project = document.getElementById("project");
-
-    const projectTitle = document.getElementById("todo_title"); 
-    const todoCard = document.createElement("div"); 
-    todoCard.classList.add("task"); 
-    todos.appendChild(todoCard); 
-    const todoCardCol1 = document.createElement("div"); 
-    todoCardCol1.classList.add("task_col_1"); 
-    const todoTitle = document.createElement("h3"); 
-    const todoDescription = document.createElement("p"); 
-    const todoDueDate = document.createElement("p");  
-    const todoPriority = document.createElement("p"); 
-    todoTitle.textContent = title.value; 
-    todoDescription.textContent = `Description: ${description.value}`; 
-    todoDueDate.textContent = `Due Date: ` + format(parseISO(dueDate.value), 'MMMM do yyyy');  
-    todoPriority.textContent = `Priority: ${priority.value}`; 
-    todoCardCol1.append(todoTitle, todoDescription, todoDueDate, todoPriority); 
-
-    const todoCardCol2 = document.createElement("div"); 
-    todoCardCol2.classList.add("task_col_2"); 
-    const deleteBtn = document.createElement("button"); 
-    deleteBtn.classList.add("task_btn"); 
-    deleteBtn.textContent = "Delete"; 
-    const editBtn = document.createElement("button"); 
-    editBtn.classList.add("task_btn"); 
-    editBtn.textContent = "Edit";  
-    todoCardCol2.append(deleteBtn, editBtn); 
-    todoCard.append(todoCardCol1, todoCardCol2);
-
-    deleteBtn.addEventListener("click", () => {
-        todoCard.remove(); 
-        deleteTodo(todoTitle.textContent, projectTitle.textContent); 
-    }); 
-
-    editBtn.addEventListener("click", () => {
-        dialog.showModal(); 
-        title.value  = todoTitle.textContent; 
-        description.value = description; 
-        dueDate.value = dueDate;  
-        priority.value = priority; 
-        project.value = projectTitle.textContent; 
-    })
-}
-
 //Populate project buttons to display todos 
-function populateProject(array) {
+function loadProject(array) {
+
+    const customProjects = document.querySelector(".custom_projects"); 
+    
+    while (customProjects.hasChildNodes()) {
+        customProjects.removeChild(customProjects.firstChild); 
+    }
+
+    array = JSON.parse(localStorage.getItem(array)); 
+    const projectList = document.getElementById("project"); 
     for (let i = 0; i <= array.length - 1; i++) {
-        
+        //Create new option in todo dialog
+        const newProjectChoice = document.createElement("option"); 
+        newProjectChoice.value = array[i]; 
+        newProjectChoice.textContent = array[i]; 
+        projectList.appendChild(newProjectChoice);
+        //make new project button 
+        const newProject = document.createElement("button"); 
+        newProject.classList.add("project_btn"); 
+        newProject.setAttribute("id", array[i]); 
+        newProject.textContent = array[i];    
+        customProjects.appendChild(newProject);
     }
 }
 
