@@ -1,3 +1,15 @@
+//Create default localStorage keys and values 
+function startStorage() {
+    if (localStorage.length == 0) {
+        createProject("Inbox"); 
+        createProject("Today"); 
+        createProject("This Week"); 
+        createProject("Custom Projects"); 
+        localStorage.setItem("Todo Title", "Inbox"); 
+        localStorage.setItem("Edit todo", ""); 
+    }
+}
+
 //Make new todo
 function todo(title, description, dueDate, priority) {
     return {title, description, dueDate, priority} 
@@ -48,5 +60,5 @@ function deleteProject(project) {
     localStorage.removeItem(project); 
 }
 
-export {todo, createProject, addTodo, getTodo, deleteTodo, deleteProject, changeTodoTitle}; 
+export {todo, createProject, addTodo, getTodo, deleteTodo, deleteProject, changeTodoTitle, startStorage}; 
 

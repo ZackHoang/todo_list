@@ -66,7 +66,11 @@ function displayForm() {
 
 //Display todos
 function displayTodos() {
-    loadProject("Custom Projects"); 
+    let customProjects = JSON.parse (localStorage.getItem("Custom Projects")); 
+    console.log(customProjects);
+    if (customProjects != null) {
+        loadProject("Custom Projects"); 
+    }
 
     const projectBtns = document.querySelectorAll(".project_btn"); 
     const todoTitle = document.getElementById("todo_title"); 
@@ -126,10 +130,12 @@ function makeTodo() {
     const todoTitle = document.getElementById("todo_title"); 
 
     submit.addEventListener("click", (event) => {
-        let editTodo = JSON.parse(localStorage.getItem("Edit todo")); 
-        deleteTodo(editTodo.title, todoTitle.textContent); 
-        deleteTodo(editTodo.title, "Today"); 
-        deleteTodo(editTodo.title, "This Week"); 
+        let editTodo = JSON.stringify(localStorage.getItem("Edit todo")); 
+        if (editTodo != null) {
+            deleteTodo(editTodo.title, todoTitle.textContent); 
+            deleteTodo(editTodo.title, "Today"); 
+            deleteTodo(editTodo.title, "This Week");
+        }
 
         while (todos.hasChildNodes()) {
             todos.removeChild(todos.firstChild); 
@@ -177,6 +183,7 @@ function makeProject() {
         event.preventDefault(); 
         createProject(projectTitle.value); 
         let projectArr = JSON.parse(localStorage.getItem("Custom Projects")); 
+        console.log(projectArr); 
         projectArr.push(projectTitle.value); 
         localStorage.setItem("Custom Projects", JSON.stringify(projectArr)); 
         displayTodos(); 
