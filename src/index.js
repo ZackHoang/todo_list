@@ -4,6 +4,7 @@ import './index.css';
 
 const addTodo = document.getElementById("todo_btn"); 
 const addProject = document.getElementById("add_project"); 
+const todoTitle = document.getElementById("todo_title"); 
 
 addIcon(); 
 displayForm(); 
@@ -27,7 +28,7 @@ displayProject();
 // localStorage.removeItem("custom3"); 
 // localStorage.removeItem("custom4"); 
 // localStorage.removeItem("custom5"); 
-// localStorage.removeItem(""); 
+
 
 
 

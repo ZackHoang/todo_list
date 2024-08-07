@@ -3,7 +3,7 @@ import TodayIcon from './icons/calendar-today.svg';
 import ThisWeekIcon from './icons/calendar-week.svg'; 
 import Plus from './icons/plus.svg'; 
 
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, isToday, isSameWeek, startOfDay, isThisWeek, startOfToday } from 'date-fns';
 import { todo, createProject, addTodo, getTodo, deleteTodo, changeTodoTitle } from './todo';
 
 const todos = document.querySelector(".todos"); 
@@ -126,6 +126,15 @@ function makeTodo() {
     const todoTitle = document.getElementById("todo_title"); 
 
     submit.addEventListener("click", (event) => {
+        let editTodo = JSON.parse(localStorage.getItem("Edit todo")); 
+        deleteTodo(editTodo.title, todoTitle.textContent); 
+        deleteTodo(editTodo.title, "Today"); 
+        deleteTodo(editTodo.title, "This Week"); 
+
+        while (todos.hasChildNodes()) {
+            todos.removeChild(todos.firstChild); 
+        }
+
         if (title.value.length != 0 && dueDate.value != '') {
             event.preventDefault(); 
             if (description.value == '') {
@@ -133,12 +142,24 @@ function makeTodo() {
             }
             const newToDo = todo(title.value, description.value, dueDate.value, priority.value);
             addTodo(newToDo, project.value); 
+            const today = format(startOfToday(), 'yyyy-MM-dd'); 
+            console.log(today); 
+            console.log(newToDo.dueDate); 
+            if (newToDo.dueDate == today) {
+                addTodo(newToDo, "Today"); 
+            }
+            if (isThisWeek(newToDo.dueDate, {weekStartsOn: 1})) {
+                addTodo(newToDo, "This Week"); 
+            }            
             title.value = ''; 
             description.value = ''; 
             dueDate.value = ''; 
             console.log(newToDo); 
             dialog.close(); 
             const projectArr = getTodo(todoTitle.textContent); 
+            // for (let i = 0; i < projectArr.length; i++) {
+            //     if (editTodo == projectArr[i])
+            // }
             if (project.value == todoTitle.textContent) {
                 populateTodoArr(projectArr);  
             } 
@@ -205,11 +226,15 @@ function populateTodoArr(array) {
         todoCardCol2.append(deleteBtn, editBtn); 
         todoCard.append(todoCardCol1, todoCardCol2);
         deleteBtn.addEventListener("click", () => {
-            todoCard.remove(); 
+            todoCard.remove();  
             deleteTodo(todoTitle.textContent, projectTitle.textContent);
+            deleteTodo(todoTitle.textContent, "Inbox"); 
+            deleteTodo(todoTitle.textContent, "Today"); 
+            deleteTodo(todoTitle.textContent, "This Week"); 
         }); 
 
         editBtn.addEventListener("click", () => {
+            localStorage.setItem("Edit todo", JSON.stringify(array[i])); 
             dialog.showModal(); 
             title.value  = todoTitle.textContent; 
             description.value = array[i].description; 
